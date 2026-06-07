@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Learning Hub - สื่อและการจัดการเรียนรู้เชิงรุก</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Sarabun & Mitr -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // เปิดใช้งาน Dark Mode แบบคลาส
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Sarabun', 'sans-serif'],
+                        heading: ['Mitr', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981', // Emerald
+                            600: '#059669',
+                            700: '#047857',
+                        },
+                        accent: {
+                            50: '#eef2ff',
+                            500: '#6366f1', // Indigo
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Mitr', sans-serif;
+        }
+        /* คลาสปรับแต่ง Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* คลาสแอนิเมชันระดับพรีเมียม */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.2); }
+            50% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .animate-slide-in {
+            animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .glow-active {
+            animation: glow 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- ส่วนหัวและแถบเมนูนำทาง (Header & Navigation) -->
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur shadow-sm border-b border-slate-100 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- โลโก้เว็บไซต์ -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-brand-500 to-accent-500 rounded-xl flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                        <i class="fa-solid fa-graduation-cap text-lg animate-bounce"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold bg-gradient-to-r from-brand-600 to-accent-600 bg-clip-text text-transparent font-heading tracking-wide">Active Learning Hub</span>
+                        <p class="text-xs text-slate-400 dark:text-slate-500 hidden sm:block">นวัตกรรมสื่อการสอนเพื่อการเรียนรู้ยุคใหม่</p>
+                    </div>
+                </div>
+
+                <!-- เมนูเดสก์ท็อป -->
+                <nav class="hidden lg:flex space-x-1 items-center">
+                    <a href="#about" class="group px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-circle-info text-slate-400 dark:text-slate-500 group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors"></i>
+                        <span>Active Learning คืออะไร</span>
+                    </a>
+                    <a href="#techniques" class="group px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-chalkboard-user text-slate-400 dark:text-slate-500 group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors"></i>
+                        <span>เทคนิคการสอน</span>
+                    </a>
+                    <a href="#ai-assistant" class="group px-3 py-2 rounded-lg text-sm font-medium text-brand-600 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-brand-950/20 transition-all duration-200 flex items-center space-x-1.5 font-semibold">
+                        <i class="fa-solid fa-wand-magic-sparkles text-brand-500 dark:text-brand-400 group-hover:scale-110 transition-transform"></i>
+                        <span>เขียนแผนด้วย AI</span>
+                    </a>
+                    <a href="#tools" class="group px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-laptop-code text-slate-400 dark:text-slate-500 group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors"></i>
+                        <span>เครื่องมือดิจิทัล</span>
+                    </a>
+                    <a href="#quiz" class="group px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-clipboard-question text-slate-400 dark:text-slate-500 group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors"></i>
+                        <span>ประเมินความพร้อม</span>
+                    </a>
+                    <a href="#downloads" class="group px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-circle-down text-slate-400 dark:text-slate-500 group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors"></i>
+                        <span>ดาวน์โหลดสื่อ</span>
+                    </a>
+                </nav>
+
+                <!-- ข้อมูลผู้พัฒนา & สลับโหมด (Desktop) -->
+                <div class="hidden md:flex items-center space-x-3 pl-4 border-l border-slate-200 dark:border-slate-800">
+                    <!-- ปุ่มสลับโหมดกลางวัน/กลางคืน (Desktop) -->
+                    <button id="theme-toggle-desktop" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center mr-1" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-moon text-lg" id="theme-icon-desktop"></i>
+                    </button>
+
+                    <div class="flex items-center space-x-3 relative group">
+                        <span class="text-xs text-slate-500 dark:text-slate-400 text-right leading-tight">
+                            ผู้พัฒนา<br>
+                            <strong class="text-slate-700 dark:text-slate-200">Phumipat Chapalee</strong>
+                        </span>
+                        <!-- รูปภาพผู้พัฒนาจำลองด้วย Initials และ Gradient ทันสมัย -->
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-600 to-indigo-600 text-white font-bold text-sm flex items-center justify-center shadow-md relative overflow-hidden">
+                            <span>PC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ปุ่มควบคุมสำหรับมือถือ (เมนูกับสลับโหมด) -->
+                <div class="flex items-center space-x-2 lg:hidden">
+                    <!-- ปุ่มสลับโหมดกลางวัน/กลางคืน (Mobile) -->
+                    <button id="theme-toggle-mobile" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-moon text-lg" id="theme-icon-mobile"></i>
+                    </button>
+                    <!-- ปุ่มเปิดเมนูดรอปดาวน์ -->
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none" aria-label="Toggle Menu">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- รายการเมนูบนมือถือ -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 pt-2 pb-4 space-y-1 shadow-inner transition-colors duration-300">
+            <a href="#about" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition-colors" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-circle-info text-slate-400 dark:text-slate-500 w-5 text-center text-lg"></i>
+                <span>Active Learning คืออะไร</span>
+            </a>
+            <a href="#techniques" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition-colors" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-chalkboard-user text-slate-400 dark:text-slate-500 w-5 text-center text-lg"></i>
+                <span>เทคนิคการสอน</span>
+            </a>
+            <a href="#ai-assistant" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-base font-medium text-brand-600 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-slate-800 transition-colors" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-wand-magic-sparkles text-brand-500 dark:text-brand-400 w-5 text-center text-lg animate-pulse"></i>
+                <span>เขียนแผนด้วย AI</span>
+            </a>
+            <a href="#tools" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition-colors" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-laptop-code text-slate-400 dark:text-slate-500 w-5 text-center text-lg"></i>
+                <span>เครื่องมือดิจิทัล</span>
+            </a>
+            <a href="#quiz" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition-colors" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-clipboard-question text-slate-400 dark:text-slate-500 w-5 text-center text-lg"></i>
+                <span>ประเมินความพร้อม</span>
+            </a>
+            <a href="#downloads" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition-colors" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-circle-down text-slate-400 dark:text-slate-500 w-5 text-center text-lg"></i>
+                <span>ดาวน์โหลดสื่อ</span>
+            </a>
+            
+            <div class="border-t border-slate-100 dark:border-slate-800 pt-3 mt-2 flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-600 to-indigo-600 text-white font-bold flex items-center justify-center">
+                    <span>PC</span>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400 dark:text-slate-500">ผู้พัฒนาเว็บไซต์</p>
+                    <p class="text-sm font-semibold text-slate-700 dark:text-slate-200">Phumipat Chapalee</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ส่วนต้อนรับและแนะนำสโลแกน (Hero Section) -->
+    <section class="relative bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white overflow-hidden py-16 lg:py-24 animate-fade-in">
+        <!-- ลายฉากหลัง (Decorative Patterns) -->
+        <div class="absolute inset-0 opacity-20 pointer-events-none">
+            <div class="absolute top-12 left-12 w-72 h-72 rounded-full bg-brand-500 blur-3xl"></div>
+            <div class="absolute bottom-12 right-12 w-96 h-96 rounded-full bg-accent-500 blur-3xl"></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- ข้อความโปรโมต -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-500/10 text-brand-400 border border-brand-500/25">
+                    <i class="fa-solid fa-star mr-1.5 text-xs"></i> การจัดการศึกษายุคใหม่
+                </span>
+                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight font-heading leading-tight">
+                    เปลี่ยนผู้เรียนให้เป็น <br class="hidden sm:inline">
+                    <span class="bg-gradient-to-r from-brand-400 to-accent-400 bg-clip-text text-transparent">ผู้สร้างสรรค์นวัตกรรม</span>
+                </h1>
+                <p class="text-slate-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                    Active Learning ไม่ใช่เพียงแค่ทฤษฎี แต่คือ "กระบวนการเรียนรู้ลงมือทำ" ที่กระตุ้นสมอง พัฒนาทักษะการคิดขั้นสูง และดึงศักยภาพของผู้เรียนออกมาอย่างไร้ขีดจำกัด
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#techniques" class="w-full sm:w-auto px-6 py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-medium shadow-lg shadow-brand-500/25 transition-all text-center flex items-center justify-center space-x-2">
+                        <span>ค้นหาเทคนิคการสอน</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <a href="#ai-assistant" class="w-full sm:w-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium shadow-lg transition-all text-center flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles animate-pulse"></i>
+                        <span>เขียนแผนด้วย AI ฟรี</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- รูปภาพประกอบ/การ์ดแบบ Interactive บน Hero -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="relative w-full max-w-md bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur shadow-2xl transition-all hover:border-white/20 hover:scale-[1.01]">
+                    <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                        <div class="flex space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                        </div>
+                        <span class="text-xs text-slate-400">กระดานสรุปสถิติผู้เรียน</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-white/5 p-4 rounded-xl flex items-center justify-between border border-white/5 hover:bg-white/10 transition-all cursor-default">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-bullseye"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-slate-100">การมีส่วนร่วมในห้องเรียน</h4>
+                                    <p class="text-xs text-slate-400">Active engagement rate</p>
+                                </div>
+                            </div>
+                            <span class="text-emerald-400 font-bold text-lg">+85%</span>
+                        </div>
+                        
+                        <div class="bg-white/5 p-4 rounded-xl flex items-center justify-between border border-white/5 hover:bg-white/10 transition-all cursor-default">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-lightbulb"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-slate-100">ทักษะการคิดวิเคราะห์</h4>
+                                    <p class="text-xs text-slate-400">Critical thinking index</p>
+                                </div>
+                            </div>
+                            <span class="text-indigo-400 font-bold text-lg">ดีเยี่ยม</span>
+                        </div>
+                        
+                        <div class="bg-white/5 p-4 rounded-xl flex items-center justify-between border border-white/5 hover:bg-white/10 transition-all cursor-default">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-comments"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-slate-100">การระดมสมองเป็นทีม</h4>
+                                    <p class="text-xs text-slate-400">Collaboration rate</p>
+                                </div>
+                            </div>
+                            <span class="text-amber-400 font-bold text-lg">9.5/10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนเนื้อหา: Active Learning คืออะไร (About Section) -->
+    <section id="about" class="py-16 bg-white dark:bg-slate-900 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold font-heading text-slate-900 dark:text-white sm:text-4xl">หัวใจสำคัญของ Active Learning</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto mt-4 rounded-full"></div>
+                <p class="text-slate-500 dark:text-slate-400 mt-4 text-base">
+                    การจัดการเรียนรู้เชิงรุก (Active Learning) มุ่งปรับบทบาทของผู้เรียนจาก "ผู้รับฟังเพียงอย่างเดียว" (Passive Listener) สู่การเป็น "ผู้นำและลงมือทำอย่างสร้างสรรค์" 
+                </p>
+            </div>
+
+            <!-- การเปรียบเทียบและการวิเคราะห์ (Visual Comparison Cards) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- หลักการ 1 -->
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 hover:shadow-xl dark:hover:shadow-black/20 hover:shadow-slate-100 transition-all duration-300 flex flex-col h-full justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-5">
+                            <i class="fa-solid fa-people-carry-box text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-heading text-slate-800 dark:text-slate-100 mb-2">1. การเรียนรู้แบบร่วมมือกัน (Collaborative)</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                            เปิดโอกาสให้ผู้เรียนทำงานเป็นกลุ่ม แลกเปลี่ยนความคิดเห็น ช่วยเหลือเกื้อกูลเพื่อหาข้อสรุปหรือผลลัพธ์ร่วมกัน พัฒนาทักษะสังคมและการทำงานร่วมกับผู้อื่น
+                        </p>
+                    </div>
+                    <span class="text-xs font-semibold text-brand-500 hover:underline cursor-pointer flex items-center space-x-1" onclick="showTechDetails('jigsaw')">
+                        <span>ดูวิธีนำไปประยุกต์ใช้</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </span>
+                </div>
+                
+                <!-- หลักการ 2 -->
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 hover:shadow-xl dark:hover:shadow-black/20 hover:shadow-slate-100 transition-all duration-300 flex flex-col h-full justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-accent-500/10 text-accent-600 dark:text-accent-400 flex items-center justify-center mb-5">
+                            <i class="fa-solid fa-brain text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-heading text-slate-800 dark:text-slate-100 mb-2">2. การคิดสะท้อนเชิงลึก (Reflective)</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                            หลังจากกิจกรรมเสร็จสิ้น ผู้เรียนต้องวิเคราะห์ "สิ่งที่ได้เรียนรู้" และ "วิธีปรับปรุง" เพื่อสร้างความเข้าใจที่ยั่งยืนผ่านกระบวนการสะท้อนคิด (Reflection/AAR)
+                        </p>
+                    </div>
+                    <span class="text-xs font-semibold text-accent-500 hover:underline cursor-pointer flex items-center space-x-1" onclick="showTechDetails('tps')">
+                        <span>ดูวิธีนำไปประยุกต์ใช้</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </span>
+                </div>
+
+                <!-- หลักการ 3 -->
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 hover:shadow-xl dark:hover:shadow-black/20 hover:shadow-slate-100 transition-all duration-300 flex flex-col h-full justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-5">
+                            <i class="fa-solid fa-compass-drafting text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-heading text-slate-800 dark:text-slate-100 mb-2">3. การประยุกต์ใช้ความจริง (Authentic Task)</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                            การเชื่อมโยงทฤษฎีในบทเรียนสู่การแก้ปัญหาที่เกิดขึ้นจริงในชีวิตประจำวันหรือชุมชน เพื่อให้ผู้เรียนเห็นถึงคุณค่าและพลังของความรู้ที่แท้จริง
+                        </p>
+                    </div>
+                    <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline cursor-pointer flex items-center space-x-1" onclick="showTechDetails('pbl')">
+                        <span>ดูวิธีนำไปประยุกต์ใช้</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- ส่วนส่งเสริมการเปรียบเทียบ Passive vs Active -->
+            <div class="mt-16 bg-gradient-to-r from-slate-50 to-brand-50/30 dark:from-slate-850 dark:to-brand-950/10 p-8 rounded-3xl border border-slate-100 dark:border-slate-800/60 transition-colors duration-300">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h4 class="text-xl font-bold font-heading text-slate-900 dark:text-white mb-4">ตารางเปรียบเทียบบทบาทความแตกต่าง</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">ความคุ้นชินรูปแบบเดิมกำลังจะเปลี่ยนไป ยุคปัจจุบันคุณครูต้องเปลี่ยนผ่านบทบาทเป็น Facilitator (ผู้อำนวยการสอน)</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-rose-500 mt-1"><i class="fa-solid fa-circle-xmark text-lg"></i></span>
+                                <div>
+                                    <strong class="text-slate-700 dark:text-slate-200 text-sm block font-semibold">Passive Learning: ผู้เรียนเป็นผู้รับฝ่ายเดียว</strong>
+                                    <span class="text-xs text-slate-500 dark:text-slate-400">เน้นการจดจำ ท่องจำ ทำตามตำราเรียน และวัดระดับความรู้ด้วยการทำแบบทดสอบแบบเดียว</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="text-brand-500 mt-1"><i class="fa-solid fa-circle-check text-lg"></i></span>
+                                <div>
+                                    <strong class="text-slate-700 dark:text-slate-200 text-sm block font-semibold">Active Learning: ผู้เรียนสร้างสรรค์ความรู้ด้วยตนเอง</strong>
+                                    <span class="text-xs text-slate-500 dark:text-slate-400">เน้นการตั้งคำถาม ค้นหาคำตอบ ลงมือปฏิบัติตามความถนัด และแลกเปลี่ยนคิดเห็นกับชุมชน</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- โควตคำคมที่น่าสนใจ -->
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm relative transition-colors duration-300">
+                        <i class="fa-solid fa-quote-left text-brand-100 dark:text-brand-900/10 text-5xl absolute -top-4 -left-2 z-0"></i>
+                        <div class="relative z-10">
+                            <p class="italic text-slate-600 dark:text-slate-300 text-base mb-4 leading-relaxed">
+                                "บอกฉัน ฉันจะลืม สอนฉัน ฉันอาจจำ แต่เมื่อให้ฉันมีส่วนร่วม ฉันจะเข้าใจและเรียนรู้มันได้อย่างแท้จริง"
+                            </p>
+                            <span class="text-sm font-semibold text-slate-800 dark:text-slate-200 block">— เบนจามิน แฟรงคลิน</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">ปรัชญาหัวใจของการจัดการเรียนรู้เชิงรุก</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนเทคนิคการสอน Active Learning แบบอินเตอร์แอคทีฟฟิลเตอร์ -->
+    <section id="techniques" class="py-16 bg-slate-50 dark:bg-slate-950 border-t border-b border-slate-100 dark:border-slate-900 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold font-heading text-slate-900 dark:text-white sm:text-4xl">คลังนวัตกรรมและเทคนิคการสอน</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto mt-4 rounded-full"></div>
+                <p class="text-slate-500 dark:text-slate-400 mt-4 text-base">
+                    นี่คือแนวคิดและวิธีการจัดการเรียนรู้ที่ได้รับการยอมรับและเป็นที่นิยม คุณสามารถเลือกดูเทคนิคที่ตอบโจทย์ของคุณผ่านตัวกรองด้านล่างได้ทันที
+                </p>
+            </div>
+
+            <!-- ระบบคัดกรองเทคนิค (Interactive Filtering Controls) -->
+            <div class="mb-8 flex flex-wrap items-center justify-center gap-2">
+                <button onclick="filterTechnique('all')" id="btn-tech-all" class="tech-filter-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-brand-600 text-white shadow-md shadow-brand-500/10">
+                    ทั้งหมด
+                </button>
+                <button onclick="filterTechnique('pbl')" id="btn-tech-pbl" class="tech-filter-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700">
+                    เน้นปัญหา/โครงงาน
+                </button>
+                <button onclick="filterTechnique('game')" id="btn-tech-game" class="tech-filter-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700">
+                    เกมมิฟิเคชัน
+                </button>
+                <button onclick="filterTechnique('collab')" id="btn-tech-collab" class="tech-filter-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700">
+                    เน้นทำงานร่วมกัน
+                </button>
+            </div>
+
+            <!-- รายการการ์ดเทคนิค (Technique Cards) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="techniques-grid">
+                
+                <!-- Card 1: Project-Based Learning (PBL) -->
+                <div class="tech-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-black/20 transition-all duration-300 flex flex-col h-full" data-category="pbl">
+                    <div class="bg-gradient-to-r from-teal-500 to-emerald-500 p-6 text-white relative">
+                        <div class="absolute right-4 top-4 text-white/20 text-5xl">
+                            <i class="fa-solid fa-diagram-project"></i>
+                        </div>
+                        <span class="inline-block px-2 py-0.5 rounded bg-white/20 text-xs font-semibold uppercase tracking-wider mb-2">PBL</span>
+                        <h4 class="text-xl font-bold font-heading">การเรียนรู้โดยใช้โครงงานเป็นฐาน</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">
+                                ผู้เรียนจะได้เลือกสรรหัวข้อ ค้นหา และลงมือแก้ปัญหาที่มีความสำคัญอย่างรอบด้านด้วยกลุ่มของตัวเอง นำมาสู่การสร้างชิ้นงานที่ตอบโจทย์วิถีชีวิตจริง
+                            </p>
+                            <div class="space-y-2 mb-6">
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระยะเวลา:</span>
+                                    <span>ระยะยาว (2-4 สัปดาห์)</span>
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระดับความยาก:</span>
+                                    <span class="px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 font-semibold">ปานกลาง - สูง</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="showTechDetails('pbl')" class="w-full py-2.5 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 font-semibold text-xs rounded-xl transition-all">
+                            ดูขั้นตอนการจัดกิจกรรม
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2: Problem-Based Learning (PrBL) -->
+                <div class="tech-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-black/20 transition-all duration-300 flex flex-col h-full" data-category="pbl">
+                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 p-6 text-white relative">
+                        <div class="absolute right-4 top-4 text-white/20 text-5xl">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <span class="inline-block px-2 py-0.5 rounded bg-white/20 text-xs font-semibold uppercase tracking-wider mb-2">Problem-Based</span>
+                        <h4 class="text-xl font-bold font-heading">การเรียนรู้โดยใช้ปัญหาเป็นฐาน</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">
+                                ใช้โจทย์สถานการณ์จริงที่มีความซับซ้อนท้าทายเป็นตัวกระตุ้น เพื่อให้ผู้เรียนวิเคราะห์ สืบเสาะหาข้อมูล นำไปสู่การแก้ปัญหาอย่างมีระเบียบวิจัย
+                            </p>
+                            <div class="space-y-2 mb-6">
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระยะเวลา:</span>
+                                    <span>ระยะกลาง (1-2 สัปดาห์)</span>
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระดับความยาก:</span>
+                                    <span class="px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 font-semibold">ปานกลาง - สูง</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="showTechDetails('prbl')" class="w-full py-2.5 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 font-semibold text-xs rounded-xl transition-all">
+                            ดูขั้นตอนการจัดกิจกรรม
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3: Game-Based Learning & Gamification -->
+                <div class="tech-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-black/20 transition-all duration-300 flex flex-col h-full" data-category="game">
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-500 p-6 text-white relative">
+                        <div class="absolute right-4 top-4 text-white/20 text-5xl">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <span class="inline-block px-2 py-0.5 rounded bg-white/20 text-xs font-semibold uppercase tracking-wider mb-2">Gamification</span>
+                        <h4 class="text-xl font-bold font-heading">การเรียนรู้โดยใช้เกมเป็นฐาน</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">
+                                บูรณาการระบบสะสมคะแนน ภารกิจ (Quest) และองค์ประกอบความสนุกสนานของเกม เพื่อกระตุ้นพลังขับเคลื่อนการแข่งขันและการค้นหาทักษะทางวิชาการร่วมกัน
+                            </p>
+                            <div class="space-y-2 mb-6">
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระยะเวลา:</span>
+                                    <span>ระยะสั้น (1-2 คาบเรียน)</span>
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระดับความยาก:</span>
+                                    <span class="px-2 py-0.5 rounded bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 font-semibold">ง่าย - ปานกลาง</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="showTechDetails('game')" class="w-full py-2.5 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 font-semibold text-xs rounded-xl transition-all">
+                            ดูขั้นตอนการจัดกิจกรรม
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 4: Role-Play & Simulation -->
+                <div class="tech-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-black/20 transition-all duration-300 flex flex-col h-full" data-category="game">
+                    <div class="bg-gradient-to-r from-rose-500 to-pink-500 p-6 text-white relative">
+                        <div class="absolute right-4 top-4 text-white/20 text-5xl">
+                            <i class="fa-solid fa-users-viewfinder"></i>
+                        </div>
+                        <span class="inline-block px-2 py-0.5 rounded bg-white/20 text-xs font-semibold uppercase tracking-wider mb-2">Simulation</span>
+                        <h4 class="text-xl font-bold font-heading">สถานการณ์จำลองและบทบาทสมมติ</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">
+                                ให้ผู้เรียนสวมบทบาทเป็นบุคคลในสถานการณ์จริงที่ถูกจำลองขึ้น เพื่อฝึกปฏิสัมพันธ์ การตัดสินใจภายใต้ข้อจำกัด และทำความเข้าใจมุมมองผู้อื่น
+                            </p>
+                            <div class="space-y-2 mb-6">
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระยะเวลา:</span>
+                                    <span>ระยะสั้น (1 คาบเรียน)</span>
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระดับความยาก:</span>
+                                    <span class="px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 font-semibold">ปานกลาง</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="showTechDetails('roleplay')" class="w-full py-2.5 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 font-semibold text-xs rounded-xl transition-all">
+                            ดูขั้นตอนการจัดกิจกรรม
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 5: Think-Pair-Share -->
+                <div class="tech-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-black/20 transition-all duration-300 flex flex-col h-full" data-category="collab">
+                    <div class="bg-gradient-to-r from-orange-400 to-amber-500 p-6 text-white relative">
+                        <div class="absolute right-4 top-4 text-white/20 text-5xl">
+                            <i class="fa-solid fa-comments"></i>
+                        </div>
+                        <span class="inline-block px-2 py-0.5 rounded bg-white/20 text-xs font-semibold uppercase tracking-wider mb-2">Think-Pair-Share</span>
+                        <h4 class="text-xl font-bold font-heading">คิด-จับคู่-แบ่งปันความรู้</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">
+                                กิจกรรมกระตุ้นการคิดอย่างรวดเร็ว เริ่มจากการให้คิดด้วยตัวเอง จับคู่ปรึกษากับเพื่อนร่วมชั้น จากนั้นนำข้อสรุปมาร่วมอภิปรายแบ่งปันในวงกว้าง
+                            </p>
+                            <div class="space-y-2 mb-6">
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระยะเวลา:</span>
+                                    <span>ระยะสั้น (10-15 นาที)</span>
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระดับความยาก:</span>
+                                    <span class="px-2 py-0.5 rounded bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 font-semibold">ง่ายมาก</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="showTechDetails('tps')" class="w-full py-2.5 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 font-semibold text-xs rounded-xl transition-all">
+                            ดูขั้นตอนการจัดกิจกรรม
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 6: Jigsaw Classroom -->
+                <div class="tech-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-black/20 transition-all duration-300 flex flex-col h-full" data-category="collab">
+                    <div class="bg-gradient-to-r from-violet-500 to-fuchsia-500 p-6 text-white relative">
+                        <div class="absolute right-4 top-4 text-white/20 text-5xl">
+                            <i class="fa-solid fa-puzzle-piece"></i>
+                        </div>
+                        <span class="inline-block px-2 py-0.5 rounded bg-white/20 text-xs font-semibold uppercase tracking-wider mb-2">Jigsaw Method</span>
+                        <h4 class="text-xl font-bold font-heading">เทคนิคจิ๊กซอว์สร้างความเชี่ยวชาญ</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">
+                                แบ่งผู้เรียนเป็นกลุ่มหลัก และมอบหัวข้อย่อยให้สมาชิกแยกย้ายไปศึกษาประเด็นที่ต่างกันในฐานะ "ผู้เชี่ยวชาญ" จากนั้นนำความรู้กลับมารวบรวมสอนกลุ่มตัวเอง
+                            </p>
+                            <div class="space-y-2 mb-6">
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระยะเวลา:</span>
+                                    <span>ระยะสั้น (30-50 นาที)</span>
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระดับความยาก:</span>
+                                    <span class="px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 font-semibold">ปานกลาง</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="showTechDetails('jigsaw')" class="w-full py-2.5 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 font-semibold text-xs rounded-xl transition-all">
+                            ดูขั้นตอนการจัดกิจกรรม
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 7: Gallery Walk -->
+                <div class="tech-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-black/20 transition-all duration-300 flex flex-col h-full" data-category="collab">
+                    <div class="bg-gradient-to-r from-emerald-400 to-teal-600 p-6 text-white relative">
+                        <div class="absolute right-4 top-4 text-white/20 text-5xl">
+                            <i class="fa-solid fa-images"></i>
+                        </div>
+                        <span class="inline-block px-2 py-0.5 rounded bg-white/20 text-xs font-semibold uppercase tracking-wider mb-2">Gallery Walk</span>
+                        <h4 class="text-xl font-bold font-heading">กิจกรรมเดินชมแกลเลอรีแชร์ไอเดีย</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">
+                                ผู้เรียนผลิตชิ้นงานแล้วติดรอบห้องเรียน สมาชิกสลับกันเดินทัวร์เพื่ออภิปราย แลกเปลี่ยนความรู้ แปะข้อเสนอแนะสะท้อนคิด (Peer-Review) ด้วยความสนุกสนาน
+                            </p>
+                            <div class="space-y-2 mb-6">
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระยะเวลา:</span>
+                                    <span>ระยะสั้น (20-30 นาที)</span>
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400 dark:text-slate-500">
+                                    <span class="w-24 font-medium text-slate-600 dark:text-slate-400">ระดับความยาก:</span>
+                                    <span class="px-2 py-0.5 rounded bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 font-semibold">ง่าย</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="showTechDetails('gallery')" class="w-full py-2.5 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 font-semibold text-xs rounded-xl transition-all">
+                            ดูขั้นตอนการจัดกิจกรรม
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนผู้ช่วยเขียนแผนการสอนอัจฉริยะ (AI Lesson Plan Generator Section) -->
+    <section id="ai-assistant" class="py-16 bg-gradient-to-r from-emerald-50 to-indigo-50/70 dark:from-slate-900 dark:to-slate-950 border-b border-slate-100 dark:border-slate-900 transition-colors duration-300">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20 mb-2">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-1.5 animate-spin"></i> นวัตกรรม AI เพื่อครูไทย
+                </span>
+                <h2 class="text-3xl font-bold font-heading text-slate-900 dark:text-white sm:text-4xl">ผู้ช่วยเขียนแผนการสอนเชิงรุก AI</h2>
+                <p class="text-slate-500 dark:text-slate-400 mt-3 text-sm">
+                    ลดเวลาเตรียมการสอน 10 เท่า! ป้อนข้อมูลสั้นๆ เพื่อให้ AI ออกแบบขั้นตอนจัดกิจกรรมวัดความเข้าใจและจัดแผนตามเทคนิค Active Learning
+                </p>
+            </div>
+
+            <!-- กล่องโครงสร้างฟอร์ม AI -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl transition-colors duration-300 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- ฟอร์มกรอกข้อมูล -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">กลุ่มสาระการเรียนรู้ / รายวิชา</label>
+                        <select id="ai-subject" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-700 dark:text-slate-100">
+                            <option value="วิทยาศาสตร์และเทคโนโลยี">วิทยาศาสตร์และเทคโนโลยี</option>
+                            <option value="คณิตศาสตร์">คณิตศาสตร์</option>
+                            <option value="ภาษาไทย">ภาษาไทย</option>
+                            <option value="ภาษาต่างประเทศ (ภาษาอังกฤษ)">ภาษาต่างประเทศ (ภาษาอังกฤษ)</option>
+                            <option value="สังคมศึกษา ศาสนา และวัฒนธรรม">สังคมศึกษา ศาสนา และวัฒนธรรม</option>
+                            <option value="ศิลปะ (ดนตรี/นาฏศิลป์/ทัศนศิลป์)">ศิลปะ (ดนตรี/นาฏศิลป์/ทัศนศิลป์)</option>
+                            <option value="สุขศึกษาและพลศึกษา">สุขศึกษาและพลศึกษา</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">ระดับชั้น</label>
+                        <select id="ai-grade" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-700 dark:text-slate-100">
+                            <option value="ประถมศึกษาปีที่ 1-3">ประถมศึกษาปีที่ 1-3</option>
+                            <option value="ประถมศึกษาปีที่ 4-6">ประถมศึกษาปีที่ 4-6</option>
+                            <option value="มัธยมศึกษาปีที่ 1-3">มัธยมศึกษาปีที่ 1-3</option>
+                            <option value="มัธยมศึกษาปีที่ 4-6">มัธยมศึกษาปีที่ 4-6</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">ชื่อเรื่อง / บทเรียนที่ต้องการสอน</label>
+                        <input type="text" id="ai-topic" placeholder="เช่น การแยกขยะ, ระบบนิเวศ, การเขียนคำควบกล้ำ" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-700 dark:text-slate-100 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">เทคนิคเชิงรุกที่เลือกใช้</label>
+                        <select id="ai-technique" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-700 dark:text-slate-100">
+                            <option value="โครงงานเป็นฐาน (Project-Based Learning)">โครงงานเป็นฐาน (PBL)</option>
+                            <option value="ปัญหาเป็นฐาน (Problem-Based Learning)">ปัญหาเป็นฐาน (PrBL)</option>
+                            <option value="เกมและคะแนนสะสม (Gamification & GBL)">เกมมิฟิเคชัน (Gamification)</option>
+                            <option value="คิด-จับคู่-แชร์ (Think-Pair-Share)">คิด-จับคู่-แบ่งปันความรู้</option>
+                            <option value="จิ๊กซอว์รวมผู้เชี่ยวชาญ (Jigsaw Classroom)">เทคนิคจิ๊กซอว์ (Jigsaw)</option>
+                            <option value="บทบาทสมมติ (Role-Play & Simulation)">บทบาทสมมติ & สถานการณ์จำลอง</option>
+                        </select>
+                    </div>
+
+                    <button onclick="generateAIPending()" id="ai-gen-btn" class="w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold transition-all text-sm flex items-center justify-center space-x-2 shadow-lg shadow-brand-500/10">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>เริ่มเขียนแผนด้วย AI</span>
+                    </button>
+                </div>
+
+                <!-- กล่องแสดงผลลัพธ์จาก AI -->
+                <div class="lg:col-span-7 h-full flex flex-col">
+                    <div class="border border-slate-200 dark:border-slate-800 rounded-2xl bg-slate-50 dark:bg-slate-950 flex-grow p-5 min-h-[350px] relative flex flex-col justify-between">
+                        
+                        <!-- หน้าจอแสดงผลก่อนเริ่มพิมพ์ -->
+                        <div id="ai-result-placeholder" class="text-center py-20 my-auto flex flex-col items-center justify-center space-y-4 animate-fade-in">
+                            <div class="w-16 h-16 bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 rounded-full flex items-center justify-center text-2xl">
+                                <i class="fa-regular fa-comment-dots animate-pulse"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-600 dark:text-slate-300">กรอกข้อมูลเพื่อรันแผนการสอน</h4>
+                                <p class="text-xs text-slate-400 dark:text-slate-500 max-w-xs mx-auto mt-1 leading-relaxed">หลังจากคลิกปุ่มเริ่มเขียนแผน ระบบ AI จะเขียนขั้นตอนการจัดคาบเรียนเชิงรุกและแนวทางแบบสมบูรณ์ที่นี่</p>
+                            </div>
+                        </div>
+
+                        <!-- ตัวแสดงสถานะโหลด (Skeleton Loading กับสถานะสเตปการคิด) -->
+                        <div id="ai-result-loading" class="hidden space-y-6 my-auto py-10 w-full animate-fade-in">
+                            <div class="flex flex-col items-center justify-center space-y-3 text-center">
+                                <div class="relative flex items-center justify-center">
+                                    <div class="w-12 h-12 rounded-full border-4 border-slate-200 border-t-brand-500 animate-spin"></div>
+                                    <i class="fa-solid fa-brain text-brand-500 text-sm absolute"></i>
+                                </div>
+                                <span id="ai-step-text" class="text-brand-500 font-semibold text-sm transition-all duration-300">AI กำลังวิเคราะห์หัวข้อบทเรียนเชิงลึก...</span>
+                            </div>
+                            <div class="space-y-3 px-4">
+                                <div class="h-2 bg-slate-200 dark:bg-slate-800 rounded-full w-full"></div>
+                                <div class="h-2 bg-slate-200 dark:bg-slate-800 rounded-full w-5/6"></div>
+                                <div class="h-2 bg-slate-200 dark:bg-slate-800 rounded-full w-4/5"></div>
+                                <div class="h-2 bg-slate-200 dark:bg-slate-800 rounded-full w-11/12"></div>
+                            </div>
+                        </div>
+
+                        <!-- คอนเทนต์ข้อความผลลัพธ์ -->
+                        <div id="ai-result-content" class="hidden text-sm text-slate-700 dark:text-slate-300 leading-relaxed overflow-y-auto max-h-[420px] pr-2 space-y-4 animate-fade-in">
+                            <!-- ข้อความประมวลผลผ่าน JS -->
+                        </div>
+
+                        <!-- ทูลบาร์ด้านล่างหลังแผนเจนเสร็จ -->
+                        <div id="ai-result-toolbar" class="hidden pt-4 mt-4 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-1 rounded font-medium">คำแนะนำเชิงทฤษฎีจาก AI รุ่น Gemini-2.5</span>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="downloadGeneratedPlan()" class="px-3.5 py-1.5 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 shadow-sm">
+                                    <i class="fa-solid fa-file-arrow-down"></i>
+                                    <span>ดาวน์โหลดแผน (.txt)</span>
+                                </button>
+                                <button onclick="copyAIConsent()" class="px-3.5 py-1.5 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-250 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5">
+                                    <i class="fa-regular fa-clipboard"></i>
+                                    <span>คัดลอกแผน</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนดิจิทัลทูลและเทคโนโลยีช่วยสอน (Digital Tools Section) -->
+    <section id="tools" class="py-16 bg-white dark:bg-slate-900 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold font-heading text-slate-900 dark:text-white sm:text-4xl">เครื่องมือเทคโนโลยีช่วยสอนยอดฮิต</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto mt-4 rounded-full"></div>
+                <p class="text-slate-500 dark:text-slate-400 mt-4 text-base">
+                    เสริมพลังความแอกทีฟให้ห้องเรียนด้วยนวัตกรรมดิจิทัล ช่วยในการประเมิน วัดผล และชวนคุยแบบเรียลไทม์
+                </p>
+            </div>
+
+            <!-- กล่องรายการคลังไอเดียเครื่องมือ -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tool 1: Kahoot -->
+                <div class="border border-slate-150 dark:border-slate-800 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md dark:hover:shadow-black/20 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-950/40 text-purple-600 dark:text-purple-300 flex items-center justify-center mb-4 font-bold text-lg group-hover:scale-110 transition-transform">
+                        K!
+                    </div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100 mb-2">Kahoot!</h4>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs mb-4 leading-relaxed">จัดตอบคำถามแบบจับเวลาสไตล์เกมโชว์ กระตุ้นอะดรีนาลีนผู้เรียนให้ตื่นตัวตลอดการเรียนรู้</p>
+                    <div class="text-[10px] text-purple-700 dark:text-purple-350 bg-purple-50 dark:bg-purple-950/40 px-2 py-1 rounded inline-block font-semibold">ใช้สำหรับ: วัดความเข้าใจด่วน</div>
+                </div>
+
+                <!-- Tool 2: Padlet -->
+                <div class="border border-slate-150 dark:border-slate-800 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md dark:hover:shadow-black/20 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-950/40 text-rose-600 dark:text-rose-300 flex items-center justify-center mb-4 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-chalkboard"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100 mb-2">Padlet</h4>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs mb-4 leading-relaxed">กระดานไวท์บอร์ดจำลองออนไลน์ ให้ผู้เรียนโพสต์แชร์ความคิดเห็น ลิงก์ รูปภาพ และสรุปการเรียนรู้ร่วมกัน</p>
+                    <div class="text-[10px] text-rose-700 dark:text-rose-350 bg-rose-50 dark:bg-rose-950/40 px-2 py-1 rounded inline-block font-semibold">ใช้สำหรับ: ระดมความคิดแบบกลุ่ม</div>
+                </div>
+
+                <!-- Tool 3: Canva -->
+                <div class="border border-slate-150 dark:border-slate-800 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md dark:hover:shadow-black/20 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-sky-100 dark:bg-sky-950/40 text-sky-600 dark:text-sky-300 flex items-center justify-center mb-4 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100 mb-2">Canva</h4>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs mb-4 leading-relaxed">แพลตฟอร์มการสร้างอินโฟกราฟิก สไลด์สวยงาม และวิดีโออย่างง่าย ช่วยเพิ่มทักษะศิลปะสื่อสารเชิงภาพ</p>
+                    <div class="text-[10px] text-sky-700 dark:text-sky-350 bg-sky-50 dark:bg-sky-950/40 px-2 py-1 rounded inline-block font-semibold">ใช้สำหรับ: ออกแบบชิ้นงาน / อินโฟ</div>
+                </div>
+
+                <!-- Tool 4: Mentimeter -->
+                <div class="border border-slate-150 dark:border-slate-800 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md dark:hover:shadow-black/20 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-chart-bar"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100 mb-2">Mentimeter</h4>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs mb-4 leading-relaxed">สร้างโพลแบบเรียลไทม์ และแบบสำรวจความคิดเห็น เพื่อสะท้อนความคิดเห็นทันใจสร้างปฏิสัมพันธ์ทันตา</p>
+                    <div class="text-[10px] text-amber-700 dark:text-amber-350 bg-amber-50 dark:bg-amber-950/40 px-2 py-1 rounded inline-block font-semibold">ใช้สำหรับ: ทำประเมิน AAR สะท้อนคิด</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนทดสอบแบบสอบถามและแบบประเมินตนเอง (Interactive Quiz Section) -->
+    <section id="quiz" class="py-16 bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full blur-3xl"></div>
+        </div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-10">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-500/20 text-brand-400 border border-brand-500/30 mb-2">
+                    <i class="fa-solid fa-vial mr-1.5"></i> แบบวัดประเมินไอเดียครู
+                </span>
+                <h2 class="text-3xl font-bold font-heading">คุณจัดการเรียนรู้แบบ Active Learning ได้ดีแค่ไหน?</h2>
+                <p class="text-slate-400 mt-2 text-sm">ลองทำแบบประเมินตนเองสั้นๆ 4 ข้อ เพื่อวิเคราะห์แนวทางปรับปรุงและเทคนิคที่เหมาะกับห้องเรียนคุณ</p>
+            </div>
+
+            <!-- กล่องทดสอบ (Quiz Container) -->
+            <div class="bg-slate-800/80 rounded-3xl border border-slate-700/50 p-6 sm:p-10 shadow-xl backdrop-blur">
+                <div id="quiz-intro" class="text-center py-6 space-y-6">
+                    <div class="w-16 h-16 bg-brand-500/10 text-brand-400 border border-brand-500/25 rounded-full flex items-center justify-center mx-auto text-2xl">
+                        <i class="fa-regular fa-clipboard"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h4 class="text-lg font-semibold font-heading">พร้อมที่จะเริ่มการท้าทายกันแล้วหรือยัง?</h4>
+                        <p class="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">แบบสำรวจนี้จะประเมินผ่านระดับการมีส่วนร่วมและกลยุทธ์ส่วนตัวของคุณครูในการจัดการชั้นเรียนในปัจจุบัน</p>
+                    </div>
+                    <button onclick="startQuiz()" class="px-8 py-3 bg-brand-500 hover:bg-brand-600 rounded-xl font-bold shadow-lg shadow-brand-500/25 transition-all text-sm">
+                        เริ่มทำแบบทดสอบ
+                    </button>
+                </div>
+
+                <!-- แสดงข้อคำถาม -->
+                <div id="quiz-question-box" class="hidden space-y-6">
+                    <div class="flex items-center justify-between text-xs text-slate-400">
+                        <span id="quiz-progress-text">คำถามที่ 1 จาก 4</span>
+                        <div class="w-2/3 bg-slate-700 h-2 rounded-full overflow-hidden">
+                            <div id="quiz-progress-bar" class="bg-brand-500 h-full w-0 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                    <h3 id="quiz-question" class="text-lg font-bold font-heading text-slate-100">คำถามจำลองตัวอย่าง</h3>
+                    
+                    <div class="grid grid-cols-1 gap-3" id="quiz-options">
+                        <!-- ตัวเลือกจะถูกสร้างโดย Dynamic Code -->
+                    </div>
+                </div>
+
+                <!-- แสดงผลลัพธ์ -->
+                <div id="quiz-result-box" class="hidden text-center py-6 space-y-6 animate-fade-in">
+                    <div class="w-20 h-20 bg-brand-500 text-white rounded-full flex items-center justify-center mx-auto text-3xl shadow-lg shadow-brand-500/25">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold">คะแนนการประเมินของคุณ</p>
+                        <h3 id="quiz-score-tag" class="text-3xl font-extrabold font-heading text-brand-400">ระดับระดับดีเยี่ยม</h3>
+                        <p id="quiz-feedback-text" class="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">ยินดีด้วยอย่างยิ่ง! คุณมีแนวคิดความพร้อมและกระบวนการสอนแบบเน้นผู้เรียนเป็นสำคัญที่แข็งแรงมาก</p>
+                    </div>
+                    <div class="flex items-center justify-center gap-4">
+                        <button onclick="restartQuiz()" class="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 rounded-xl text-xs font-semibold transition-all">
+                            ทำใหม่อีกครั้ง
+                        </button>
+                        <a href="#downloads" class="px-5 py-2.5 bg-brand-500 hover:bg-brand-600 rounded-xl text-xs font-semibold transition-all shadow-md shadow-brand-500/10">
+                            รับสื่อไปปรับประยุกต์ใช้
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนดาวน์โหลดสื่อประกอบและแผนกิจกรรม (Downloads Section) -->
+    <section id="downloads" class="py-16 bg-white dark:bg-slate-900 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold font-heading text-slate-900 dark:text-white sm:text-4xl">คลังทรัพยากรตัวช่วยดาวน์โหลดฟรี</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto mt-4 rounded-full"></div>
+                <p class="text-slate-500 dark:text-slate-400 mt-4 text-base">
+                    ดาวน์โหลดเทมเพลต และตัวอย่างแผนการจัดการศึกษาเพื่อนำไปปรับและเปลี่ยนผ่านสู่ Active Classroom ของคุณได้ทันที
+                </p>
+            </div>
+
+            <!-- กล่องรายการไฟล์ดาวน์โหลด (Download Grid) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- File 1 -->
+                <div class="bg-slate-50 dark:bg-slate-800/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-lg dark:hover:shadow-black/20 transition-all">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center text-xl">
+                            <i class="fa-regular fa-file-word"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500">Document Outline</span>
+                            <h4 class="font-bold text-slate-800 dark:text-slate-100 text-base font-heading">เทมเพลตแผนจัดกิจกรรมแบบ PBL</h4>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs mt-1 leading-relaxed">โครงร่างจัดแผนการเรียนรู้พร้อมจุดประสงค์ และเกณฑ์การประเมินแบบ Rubric ละเอียด</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 dark:text-slate-500">ขนาด: 1.2 KB</span>
+                        <button onclick="downloadResource('template-pbl')" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs rounded-lg transition-all flex items-center space-x-1.5 shadow-sm">
+                            <i class="fa-solid fa-download"></i>
+                            <span>ดาวน์โหลดไฟล์</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- File 2 -->
+                <div class="bg-slate-50 dark:bg-slate-800/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-lg dark:hover:shadow-black/20 transition-all">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center text-xl">
+                            <i class="fa-regular fa-file-powerpoint"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500">Powerpoint Outline</span>
+                            <h4 class="font-bold text-slate-800 dark:text-slate-100 text-base font-heading">สไลด์ประเมินและสะท้อนความรู้ (AAR)</h4>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs mt-1 leading-relaxed">สไลด์ข้อคำถามสำคัญสำหรับกิจกรรมถอดบทเรียนเพื่อการเรียนรู้รอบด้าน (AAR)</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 dark:text-slate-500">ขนาด: 2.1 KB</span>
+                        <button onclick="downloadResource('slide-aar')" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs rounded-lg transition-all flex items-center space-x-1.5 shadow-sm">
+                            <i class="fa-solid fa-download"></i>
+                            <span>ดาวน์โหลดไฟล์</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- File 3 -->
+                <div class="bg-slate-50 dark:bg-slate-800/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-lg dark:hover:shadow-black/20 transition-all">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-amber-100 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center text-xl">
+                            <i class="fa-regular fa-file-pdf"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500">Ice-Breaker Guide</span>
+                            <h4 class="font-bold text-slate-800 dark:text-slate-100 text-base font-heading">คู่มือ 10 กิจกรรมละลายพฤติกรรม</h4>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs mt-1 leading-relaxed">คู่มือวิธีจัดกิจกรรมละลายพฤติกรรมแบบกลุ่มเล็กและกลุ่มใหญ่เพื่อให้ห้องเรียนสนุกสนาน</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between">
+                        <span class="text-xs text-slate-400 dark:text-slate-500">ขนาด: 3.5 KB</span>
+                        <button onclick="downloadResource('guide-icebreaker')" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs rounded-lg transition-all flex items-center space-x-1.5 shadow-sm">
+                            <i class="fa-solid fa-download"></i>
+                            <span>ดาวน์โหลดไฟล์</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนท้ายเว็บระบุชื่อผู้สร้างผลงาน (Footer & Developer Information) -->
+    <footer class="bg-slate-950 text-slate-400 py-12 mt-auto border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-8">
+                <!-- ข้อมูลสังเขป -->
+                <div class="md:col-span-5 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-white">
+                            <i class="fa-solid fa-graduation-cap text-base"></i>
+                        </div>
+                        <span class="text-base font-bold text-white font-heading tracking-wide">Active Learning Hub</span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed max-w-sm">
+                        พอร์ทัลรวบรวมเทมเพลต วิธีคิด และเทคโนโลยีสำหรับการจัดการศึกษาเชิงรุก เพื่อส่งเสริมศักยภาพของคุณครูไทยให้ไปสู่มาตรฐานระดับสากล
+                    </p>
+                </div>
+                
+                <!-- ลิงก์ด่วน -->
+                <div class="md:col-span-3 space-y-3">
+                    <h5 class="text-sm font-semibold text-white font-heading">เมนูลัดของเว็บ</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#about" class="hover:text-white transition-colors">หลักการทำงานเชิงรุก</a></li>
+                        <li><a href="#techniques" class="hover:text-white transition-colors">แนวทางคัดกรองเทคนิค</a></li>
+                        <li><a href="#tools" class="hover:text-white transition-colors">เครื่องมือดิจิทัลยุคใหม่</a></li>
+                        <li><a href="#quiz" class="hover:text-white transition-colors">ทดสอบประเมินตนเอง</a></li>
+                    </ul>
+                </div>
+
+                <!-- ข้อมูลลิขสิทธิ์ผู้พัฒนา -->
+                <div class="md:col-span-4 space-y-3">
+                    <h5 class="text-sm font-semibold text-white font-heading">ผู้พัฒนาและสิทธิ์ระบบ</h5>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        ออกแบบและดูแลระบบโดยคุณ <strong>Phumipat Chapalee</strong> เพื่อวัตถุประสงค์ในการเป็นสื่อการเรียนรู้แบบมีปฏิสัมพันธ์อันทรงประสิทธิภาพ
+                    </p>
+                    <div class="flex items-center space-x-2 text-xs text-slate-450">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>phumipat.ch@example.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ลิขสิทธิ์ย่อยด้านล่างสุด -->
+            <div class="border-t border-slate-900 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+                <p>&copy; 2026 Active Learning Hub. สงวนลิขสิทธิ์ทั้งหมดตามกฎหมาย</p>
+                <p class="mt-2 sm:mt-0">สร้างสรรค์ด้วยความใส่ใจโดย <span class="text-brand-400 font-semibold">Phumipat Chapalee</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- คอนเทนเนอร์แสดง Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-[100] bg-slate-900/95 dark:bg-white/95 text-white dark:text-slate-900 px-4 py-3.5 rounded-2xl shadow-2xl flex items-center space-x-2.5 transform translate-y-10 opacity-0 transition-all duration-300 border border-slate-850/20 pointer-events-none text-xs sm:text-sm font-semibold max-w-sm">
+        <i class="fa-solid fa-circle-info text-brand-500 text-base"></i>
+        <span id="toast-message">ข้อมูลการแจ้งเตือน</span>
+    </div>
+
+    <!-- โมดอลรายละเอียดขั้นตอนกิจกรรม -->
+    <div id="tech-modal" class="fixed inset-0 z-50 overflow-y-auto hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200/60 dark:border-slate-800 transform transition-all duration-300 animate-fade-in">
+            <!-- หัวข้อโมดอล -->
+            <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <h3 id="modal-title" class="text-xl font-bold font-heading text-slate-900 dark:text-white">หัวข้อข้อมูล</h3>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-200 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <!-- เนื้อหาโมดอล -->
+            <div class="p-6 space-y-4" id="modal-body">
+                <!-- ข้อมูลจะถูกใส่ที่นี่ผ่าน JS -->
+            </div>
+            <!-- ปุ่มควบคุมของโมดอล -->
+            <div class="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex justify-end">
+                <button onclick="closeModal()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-semibold transition-all">
+                    เข้าใจแล้ว
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ส่วนระบบควบคุมการทำงานเชิงโต้ตอบ (JavaScript Controls) -->
+    <script>
+        // กำหนด API key เป็นว่างตามเงื่อนไขสภาพแวดล้อม (จะถูกแมปคีย์ตอนรันไทม์)
+        const apiKey = "";
+        let generatedPlanRawText = ""; // เก็บข้อความดิบไว้เพื่อใช้ฟังก์ชันคัดลอกและดาวน์โหลด
+
+        // 0. ระบบสลับโหมดกลางวัน/กลางคืน (Light/Dark Mode Theme Toggle)
+        const themeIconDesktop = document.getElementById('theme-icon-desktop');
+        const themeIconMobile = document.getElementById('theme-icon-mobile');
+        const toggleButtons = [
+            document.getElementById('theme-toggle-desktop'),
+            document.getElementById('theme-toggle-mobile')
+        ];
+
+        function initTheme() {
+            const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const savedTheme = sessionStorage.getItem('theme');
+
+            if (savedTheme === 'dark' || (!savedTheme && userPrefersDark)) {
+                setDarkTheme(true);
+            } else {
+                setDarkTheme(false);
+            }
+        }
+
+        function setDarkTheme(isDark) {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                if (themeIconDesktop) themeIconDesktop.className = 'fa-solid fa-sun text-lg text-amber-400';
+                if (themeIconMobile) themeIconMobile.className = 'fa-solid fa-sun text-lg text-amber-400';
+                sessionStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                if (themeIconDesktop) themeIconDesktop.className = 'fa-solid fa-moon text-lg text-slate-500';
+                if (themeIconMobile) themeIconMobile.className = 'fa-solid fa-moon text-lg text-slate-500';
+                sessionStorage.setItem('theme', 'light');
+            }
+        }
+
+        toggleButtons.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    const isDark = document.documentElement.classList.contains('dark');
+                    setDarkTheme(!isDark);
+                    showToast(!isDark ? "เปลี่ยนเป็นโหมดกลางคืนแล้ว 🌙" : "เปลี่ยนเป็นโหมดกลางวันแล้ว ☀️");
+                });
+            }
+        });
+
+        // 1. ควบคุม Mobile Menu สำหรับเปิดปิดแถบเครื่องมือ
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.className = 'fa-solid fa-xmark text-xl';
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.className = 'fa-solid fa-bars text-xl';
+            }
+        });
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.add('hidden');
+            menuIcon.className = 'fa-solid fa-bars text-xl';
+        }
+
+        // 2. ระบบคัดกรองเทคนิคการจัดการเรียนรู้ (Techniques Filtering System)
+        function filterTechnique(category) {
+            const cards = document.querySelectorAll('.tech-card');
+            const buttons = document.querySelectorAll('.tech-filter-btn');
+            
+            buttons.forEach(btn => {
+                btn.className = "tech-filter-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700";
+            });
+
+            const activeBtn = document.getElementById(`btn-tech-${category}`);
+            if (activeBtn) {
+                activeBtn.className = "tech-filter-btn px-4 py-2 rounded-xl text-sm font-medium transition-all bg-brand-600 text-white shadow-md shadow-brand-500/10";
+            }
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // 3. โมเดลแสดงรายละเอียด (Custom Modal Data & Logic)
+        const techDetailsData = {
+            pbl: {
+                title: "การจัดกิจกรรมโดยใช้โครงงานเป็นฐาน (PBL)",
+                steps: [
+                    "<strong>ขั้นตั้งคำถามกระตุ้นคิด (1-2 คาบ):</strong> ครูนำเสนอปัญหาท้าทายในระดับชุมชน เช่น ขยะล้นโรงเรียน หรือ ปัญหาน้ำเสีย เพื่อกระตุ้นความสนใจของนักเรียน",
+                    "<strong>ขั้นวางแผนสร้างโครงงาน (2 คาบ):</strong> แบ่งกลุ่มคละความถนัด นักเรียนร่วมระดมแนวทางและวางแผนกระบวนการศึกษาและชิ้นงานปลายทาง",
+                    "<strong>ขั้นลงมือแสวงหาคำตอบ (นอกเวลา / บูรณาการ):</strong> นักเรียนออกภาคสนาม สัมภาษณ์ ทดลอง และเก็บข้อมูลอย่างเป็นระบบเพื่อแก้ไขโจทย์จริง",
+                    "<strong>ขั้นส่งมอบผลลัพธ์และสะท้อนคิด (2 คาบ):</strong> จัดงานแสดงโครงงานจำลอง (Exhibition) นำเสนอผลสัมฤทธิ์แก่เพื่อนร่วมชั้นและรับคอมเมนต์ปรับปรุง"
+                ]
+            },
+            prbl: {
+                title: "การจัดกิจกรรมโดยใช้ปัญหาเป็นฐาน (Problem-Based Learning)",
+                steps: [
+                    "<strong>ขั้นนิยามปัญหา:</strong> ให้ผู้เรียนเผชิญกับสถานการณ์ซับซ้อนที่น่าสงสัยและร่วมกันระบุตัวแกนกลางปัญหาให้ชัดเจน",
+                    "<strong>ขั้นวิเคราะห์สิ่งที่เราไม่รู้:</strong> จัดทำแผนระดมสมองแยกแยะหัวข้อที่ต้องศึกษาค้นหาความรู้เพิ่มเติม (What we need to know)",
+                    "<strong>ขั้นค้นคว้าอิสระ:</strong> สมาชิกในกลุ่มแบ่งหน้าที่ศึกษาและรวบรวมทฤษฎีความรู้จากหนังสือ อินเทอร์เน็ต หรือสัมภาษณ์กูรู",
+                    "<strong>ขั้นสังเคราะห์ผลและแก้ไข:</strong> รวบรวมข้อมูลทั้งหมดที่แต่ละคนได้ มาประยุกต์ร่วมกันหาแนวทางแก้ปัญหาและประเมินผลลัพธ์"
+                ]
+            },
+            game: {
+                title: "การจัดกิจกรรมโดยใช้เกมเป็นฐาน (Gamification)",
+                steps: [
+                    "<strong>ขั้นกำหนดเป้าหมายภารกิจ:</strong> สร้างสถานการณ์จำลองขึ้นมาเป็นเควส (Quest) เพื่อลุยความรู้รายด่าน",
+                    "<strong>ขั้นวางกลไกการรับแต้ม:</strong> การสลับความรู้เป็นเกณฑ์รับเหรียญรางวัล คะแนน หรือตารางจัดอันดับ (Leaderboard)",
+                    "<strong>ขั้นสร้างการประเมินแบบทันที:</strong> ให้ผู้เรียนทราบจุดอ่อนจุดแข็งของตัวเองหลังจากจบการเล่นทันที",
+                    "<strong>ขั้นแลกเปลี่ยนข้อคิดเชิงวิชาการ:</strong> สรุปหัวใจและทักษะที่แฝงไว้ในเกม เพื่อไม่ให้ผู้เรียนเน้นเอาแต่ชนะอย่างเดียว"
+                ]
+            },
+            roleplay: {
+                title: "การจัดกิจกรรมบทบาทสมมติ (Role-Play & Simulation)",
+                steps: [
+                    "<strong>ขั้นเตรียมสถานการณ์:</strong> ครูสร้างบทบาทสมมติและชุดกติกาของเหตุการณ์จำลอง เช่น จำลองการประชุมสภาระดับโลก",
+                    "<strong>ขั้นแบ่งบทบาทผู้เล่น:</strong> ให้ผู้เรียนเลือกหรือสุ่มบทบาทที่ต่างกัน (เช่น ตัวแทนภาครัฐ, ผู้นำชุมชน, นักสิ่งแวดล้อม)",
+                    "<strong>ขั้นแสดงตามบทบาท:</strong> ปล่อยให้เกิดปฏิสัมพันธ์ การถกเถียงและเจรจาต่อรองจริงตามทัศนคติของตัวละครนั้นๆ",
+                    "<strong>ขั้นสรุปบทเรียนและถอดบทเรียน:</strong> สลัดบทบาทสมมติทิ้ง แล้วกลับมานั่งล้อมวงแลกเปลี่ยนมุมมองที่ได้รับจริงจากกิจกรรม"
+                ]
+            },
+            tps: {
+                title: "วิธีจัดกิจกรรมคิด-จับคู่-แบ่งปันความรู้ (Think-Pair-Share)",
+                steps: [
+                    "<strong>ขั้นส่วนบุคคล (Think):</strong> ตั้งหัวข้อคำถามชวนขบคิดลึกๆ ให้ผู้เรียนนั่งนิ่งคิดหาไอเดียตัวเอง 2-3 นาที",
+                    "<strong>ขั้นคู่ขนาน (Pair):</strong> ให้ผู้เรียนหันไปจับคู่กับเพื่อนเพื่อแลกเปลี่ยนและขัดเกลามุมมองให้สมดุลขึ้น",
+                    "<strong>ขั้นรวมพล (Share):</strong> สุ่มคู่เพื่อแชร์ประเด็นให้เพื่อนทั้งห้องเรียนได้รับฟัง พร้อมเปิดกว้างซักถาม"
+                ]
+            },
+            jigsaw: {
+                title: "เทคนิคห้องเรียนจิ๊กซอว์ (Jigsaw Classroom)",
+                steps: [
+                    "<strong>ขั้นแบ่งกลุ่มบ้านเดิม (Home Group):</strong> แบ่งกลุ่มผู้เรียนแบบคละความสามารถ มอบหมายหัวข้อบทเรียนหลักซึ่งถูกซอยแบ่งเป็น 4-5 ข้อย่อย",
+                    "<strong>ขั้นแยกไปกลุ่มผู้เชี่ยวชาญ (Expert Group):</strong> สมาชิกที่ได้รับโจทย์ย่อยหมายเลขเดียวกันแยกย้ายมาจับกลุ่มเดียวกันเพื่อศึกษาประเด็นนั้นจนเจาะลึก",
+                    "<strong>ขั้นกลับมาถ่ายทอดที่บ้านเดิม:</strong> ผู้เชี่ยวชาญจากกลุ่มย่อยต่างๆ นำความรู้กลับมาร่วมสอนเพื่อนในกลุ่ม Home Group ของตนเองจนครบภาพจิ๊กซอว์บทเรียน",
+                    "<strong>ขั้นประเมินผลรายบุคคล:</strong> ทำการทดสอบความรู้รายบุคคลเพื่อกระตุ้นให้ผู้เชี่ยวชาญทุกคนมีความรับผิดชอบต่อการสอนเพื่อนๆ"
+                ]
+            },
+            gallery: {
+                title: "วิธีจัดกิจกรรมเดินชมแกลเลอรี (Gallery Walk)",
+                steps: [
+                    "<strong>ขั้นสร้างและจัดแสดงผลงาน:</strong> ให้แต่ละกลุ่มระดมสมองเขียนสรุปไอเดีย แผนภูมิ หรือโครงการลงบนกระดาษแผ่นใหญ่แล้วนำไปแปะตามผนังห้องเรียน",
+                    "<strong>ขั้นวางตารางเดินศึกษา:</strong> กำหนดให้สมาชิกกลุ่มแบ่งกันเป็น 'เจ้าบ้าน' คอยยืนอธิบาย และ 'นักเดินทาง' ที่เดินไปศึกษาข้อมูลผลงานกลุ่มอื่น",
+                    "<strong>ขั้นสะท้อนคิดและแนะนำ:</strong> นักเดินทางจะซักถาม บันทึกความรู้ และแปะ Post-it ข้อเสนอแนะเชิงสร้างสรรค์ให้แก่เจ้าของผลงาน",
+                    "<strong>ขั้นพัฒนาต่อยอด:</strong> หลังจากเดินทางครบ สมาชิกทุกคนกลับกลุ่มมารวบรวมข้อเสนอแนะที่เพื่อนกลุ่มอื่นแปะไว้ นำมาวิเคราะห์เพื่อปรับปรุงงานของตน"
+                ]
+            }
+        };
+
+        function showTechDetails(key) {
+            const modal = document.getElementById('tech-modal');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+            
+            const data = techDetailsData[key];
+            if (data) {
+                title.innerText = data.title;
+                body.innerHTML = `
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">ลำดับขั้นตอนเชิงปฏิบัติการสำหรับคุณครูในการนำไปบูรณาการใช้ในห้องเรียน:</p>
+                    <ol class="space-y-3 text-sm text-slate-700 dark:text-slate-300 list-decimal list-inside">
+                        ${data.steps.map(step => `<li class="pl-2 border-b border-slate-50 dark:border-slate-800 pb-2 leading-relaxed">${step}</li>`).join('')}
+                    </ol>
+                `;
+                
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden'; 
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('tech-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; 
+        }
+
+        // 4. ระบบดาวน์โหลดทรัพยากรจริงผ่าน Blob และแจ้งเตือนนุ่มนวล
+        function downloadResource(type) {
+            let title = "";
+            let content = "";
+            
+            if (type === 'template-pbl') {
+                title = "PBL_Lesson_Plan_Template.txt";
+                content = `[เทมเพลตแผนจัดกิจกรรมแบบ PBL]\n\nแผนการจัดการเรียนรู้เชิงรุก (Project-Based Learning)\n\n1. ข้อมูลทั่วไป\nรายวิชา: ...................\nระดับชั้น: ...................\nเรื่อง: ...................\nเวลา: ........ คาบ\n\n2. จุดประสงค์เชิงพฤติกรรม (Learning Objectives)\n- ด้านความรู้ (K): นักเรียนอธิบายขั้นตอนการ...\n- ด้านทักษะกระบวนการ (P): นักเรียนสามารถร่วมกันวางแผนและปฏิบัติตามโครงงาน...\n- ด้านคุณลักษณะอันพึงประสงค์ (A): นักเรียนมีวินัย และแสดงการทำงานร่วมมือร่วมใจ\n\n3. ลำดับขั้นตอนจัดกิจกรรม\n- ขั้นนํา (Hook): การตั้งคำถามกระตุ้นความคิดชวนขบคิด\n- ขั้นพัฒนาโครงงาน (Develop): นักเรียนวางแผน ค้นคว้า แสวงหาคำตอบ\n- ขั้นจัดแสดงและประเมิน (Display): แกลเลอรีแชร์ผลงานและการอภิปรายย่อย\n\n4. เกณฑ์ Rubrics ประเมินผลงานโครงงาน\n- ระดับดีเยี่ยม (3): ชิ้นงานสมบูรณ์แบบตอบสนองโจทย์ชัดเจน สื่อสารเข้าใจง่าย\n- ระดับพอใช้ (2): ผลงานมีความคิดสร้างสรรค์แต่ขาดข้อมูลเชิงประจักษ์บางประเด็น\n- ระดับเริ่มต้น (1): ผลงานขาดโครงสร้างแผนและไม่แสดงกระบวนการสืบค้น`;
+            } else if (type === 'slide-aar') {
+                title = "AAR_Slide_Presentation_Outline.txt";
+                content = `[โครงร่างสไลด์ประเมินและสะท้อนความรู้ (After Action Review - AAR)]\n\nสไลด์ 1: หน้าแรก\nหัวข้อ: "ถอดบทเรียนร่วมกันหลังกิจกรรม (After Action Review)"\nสัญลักษณ์ประกอบ: ไอคอนสมอง หรือกลุ่มหลอดไฟ\n\nสไลด์ 2: คำถามที่ 1\n"เป้าหมายดั้งเดิมของพวกเราในวันนี้คืออะไร?"\nคำอธิบาย: ให้แต่ละคนหรือกลุ่มเขียนเป้าหมายเดิมที่ตั้งไว้เพื่อเช็กทิศทาง\n\nสไลด์ 3: คำถามที่ 2\n"มีอะไรเกิดขึ้นจริงบ้าง? ดีกว่าหรือต่างจากเป้าหมายอย่างไร?"\nคำอธิบาย: วิเคราะห์ผลประจักษ์ที่ค้นพบ เพื่อหาความสัมพันธ์กับข้อดีและข้อจำกัด\n\nสไลด์ 4: คำถามที่ 3\n"อะไรเป็นปัจจัยแห่งความสำเร็จ และอะไรเป็นอุปสรรคสำคัญ?"\nคำอธิบาย: แยกแยะเหตุการณ์ สิ่งแวดล้อม และกระบวนการทำงานกลุ่ม\n\nสไลด์ 5: คำถามที่ 4\n"ในการทำงานกลุ่มครั้งต่อไป พวกเราจะนำบทเรียนนี้ไปปรับปรุงอย่างไร?"\nคำอธิบาย: สรุปข้อตกลงเพื่อความยั่งยืนในโครงงานครั้งถัดไป`;
+            } else if (type === 'guide-icebreaker') {
+                title = "IceBreaker_10_Activities_Guide.txt";
+                content = `[คู่มือ 10 กิจกรรมละลายพฤติกรรมสำหรับการจัดการเรียนรู้เชิงรุก]\n\nกิจกรรมที่ 1: "ทอสายใยใยแมงมุม"\nวิธีจัด: ครูโยนไหมพรมให้นักเรียนคนแรกพูดแนะนําตัวและสิ่งที่ชอบ จากนั้นจับปลายเชือกแล้วโยนไหมพรมให้เพื่อนคนต่อไป เพื่อเห็นความเชื่อมโยงของเพื่อนทั้งห้อง\n\nกิจกรรมที่ 2: "ความจริง 2 เท็จ 1 (Two Truths and a Lie)"\nวิธีจัด: ให้แต่ละคนคิดประวัติส่วนตัว 3 ข้อ โดยมีเรื่องจริง 2 เรื่อง และเรื่องแต่งขึ้นมา 1 เรื่อง จากนั้นให้เพื่อนร่วมกลุ่มทายว่าเรื่องใดเป็นเรื่องโกหก\n\nกิจกรรมที่ 3: "รหัสลับตัวโน้ต"\nวิธีจัด: ครูทำเสียงจังหวะสั้น-ยาว เพื่อให้นักเรียนทำท่าขยับตัว เช่น เคาะจังหวะ 3 ครั้งให้กระโดดขึ้น-ลง เพื่อฝึกสมาธิเบื้องต้นก่อนเริ่มเรียน\n\nกิจกรรมที่ 4: "ขยับโต๊ะระดมไอเดีย"\nวิธีจัด: แบ่งกลุ่มย่อยอย่างรวดเร็วด้วยการสลับป้ายสี เพื่อดึงความง่วงเหงาหาวนอนให้พร้อมรับข้อมูลใหม่ๆ`;
+            }
+
+            if (title && content) {
+                showToast(`กำลังเริ่มต้นดาวน์โหลดไฟล์: "${title}"...`);
+                setTimeout(() => {
+                    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = title;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                    showToast(`ดาวน์โหลดไฟล์ "${title}" เสร็จสมบูรณ์แล้ว!`);
+                }, 1000);
+            }
+        }
+
+        function downloadGeneratedPlan() {
+            if (!generatedPlanRawText) return;
+            const topic = document.getElementById('ai-topic').value.trim() || "Active_Learning_Plan";
+            const fileName = `${topic.replace(/\s+/g, '_')}_LessonPlan.txt`;
+            
+            const blob = new Blob([generatedPlanRawText], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showToast(`ดาวน์โหลดแผน "${fileName}" เสร็จเรียบร้อยแล้ว!`);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            
+            toastMsg.innerText = message;
+            toast.classList.remove('translate-y-10', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-10', 'opacity-0');
+            }, 3000);
+        }
+
+        // 5. ระบบคำนวณและประเมินผลระดับทักษะครู (Interactive Quiz Logic)
+        const quizQuestions = [
+            {
+                q: "1. การจัดกิจกรรมเพื่อเริ่มต้นคาบเรียนของคุณครู มักเน้นองค์ประกอบใดมากที่สุด?",
+                options: [
+                    { text: "ก. ทบทวนเนื้อหาและหัวข้อด้วยการบรรยายหน้าสไลด์", score: 1 },
+                    { text: "ข. ตั้งคำถามปริศนาชวนฉงนหรือเล่นกิจกรรม Ice-Breaking รวดเร็ว", score: 3 },
+                    { text: "ค. ให้นักเรียนอ่านตำราล่วงหน้าพร้อมกันเงียบๆ", score: 2 }
+                ]
+            },
+            {
+                q: "2. เมื่อต้องการประเมินความเข้าใจผู้เรียน ระหว่างเรียนครูเลือกใช้วิธีใดมากที่สุด?",
+                options: [
+                    { text: "ก. เรียกตรวจสมุดคำตอบช่วงท้ายสัปดาห์", score: 1 },
+                    { text: "ข. มอบภารกิจสั้นๆ แบบเรียลไทม์ผ่านควิซดิจิทัลหรือแผ่นคำถามแบบด่วน", score: 3 },
+                    { text: "ค. ถามกลุ่มนักเรียนเบื้องต้นว่ามีใครสงสัยตรงไหนไหม", score: 2 }
+                ]
+            },
+            {
+                q: "3. ในการทำงานกลุ่มของนักเรียน คุณครูมีบทบาทหน้าที่อย่างไรในระหว่างนั้น?",
+                options: [
+                    { text: "ก. ปล่อยให้นักเรียนสืบค้นอย่างอิสระโดยครูทำเอกสารด้านหน้าห้อง", score: 1 },
+                    { text: "ข. เดินสำรวจทุกกลุ่มอย่างสม่ำเสมอ คอยใช้การโค้ชด้วยคำถามแทนเฉลยตรงๆ", score: 3 },
+                    { text: "ค. สั่งการปรับตำแหน่งและแนวทางทำทีละข้อให้เหมือนๆ กัน", score: 2 }
+                ]
+            },
+            {
+                q: "4. เมื่อเจอปัญหาข้อขัดแย้งเชิงทัศนคติในระหว่างอภิปราย คุณครูจัดการอย่างไร?",
+                options: [
+                    { text: "ก. เข้าไปยุติและให้คำแนะนำแบบทฤษฎีมาตรฐานสากล", score: 1 },
+                    { text: "ข. ยินดีรับฟังพร้อมส่งเสริมให้นักเรียนร่วมพูดคุยแลกเปลี่ยนเหตุผลทีละฝ่าย", score: 3 },
+                    { text: "ค. ข้ามคำถามส่วนนี้ไปเพื่อความนิ่งสงบและรักษาเวลาของคาบสอน", score: 2 }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let totalScore = 0;
+
+        function startQuiz() {
+            document.getElementById('quiz-intro').classList.add('hidden');
+            document.getElementById('quiz-question-box').classList.remove('hidden');
+            document.getElementById('quiz-result-box').classList.add('hidden');
+            
+            currentQuestionIndex = 0;
+            totalScore = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const questionData = quizQuestions[currentQuestionIndex];
+            
+            const progressPercent = ((currentQuestionIndex) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPercent}%`;
+            document.getElementById('quiz-progress-text').innerText = `คำถามที่ ${currentQuestionIndex + 1} จาก ${quizQuestions.length}`;
+            
+            document.getElementById('quiz-question').innerText = questionData.q;
+            
+            const optionsBox = document.getElementById('quiz-options');
+            optionsBox.innerHTML = '';
+            
+            questionData.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = "w-full text-left p-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-850 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-brand-500 dark:hover:border-brand-400 transition-all text-xs sm:text-sm text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white flex items-center justify-between group shadow-sm";
+                button.innerHTML = `
+                    <span>${option.text}</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-500 dark:group-hover:text-brand-400 group-hover:translate-x-1 transition-all"></i>
+                `;
+                button.onclick = () => handleAnswer(option.score);
+                optionsBox.appendChild(button);
+            });
+        }
+
+        function handleAnswer(score) {
+            totalScore += score;
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-question-box').classList.add('hidden');
+            document.getElementById('quiz-result-box').classList.remove('hidden');
+            
+            document.getElementById('quiz-progress-bar').style.width = `100%`;
+            
+            const scoreTag = document.getElementById('quiz-score-tag');
+            const feedbackText = document.getElementById('quiz-feedback-text');
+            
+            if (totalScore >= 10) {
+                scoreTag.innerText = "ระดับ: ดีเยี่ยมที่สุด (Active Master)";
+                feedbackText.innerText = "สุดยอดไอเดีย! คุณมีแนวคิดความพร้อมและกระบวนการสอนแบบเน้นผู้เรียนเป็นสำคัญเป็นอย่างดี การประยุกต์ร่วมกับเครื่องมือดิจิทัลจะยกระดับชั้นเรียนสู่ความน่าดึงดูดระดับชาติ!";
+            } else if (totalScore >= 7) {
+                scoreTag.innerText = "ระดับ: ดีเป็นบางคราว (Active Learner)";
+                feedbackText.innerText = "คุณมีรากฐานความเข้าใจของครูรุ่นใหม่ที่ดีพอสมควร ควรส่งเสริมในส่วนของการจัดทักษะกระบวนการสะท้อนความเห็นและเลือกเครื่องมือประเมินให้มีพลวัตเร้าใจขึ้น";
+            } else {
+                scoreTag.innerText = "ระดับ: ระยะเริ่มต้น (Traditional Teacher)";
+                feedbackText.innerText = "มีความพยายามที่ดี แต่อาจยึดติดกับวิธีการบรรยายแบบดั้งเดิม ให้ลองปรับเริ่มจากเทคนิคย่อยง่ายๆ เช่น วิธี Think-Pair-Share วันละ 5 นาทีดูการมีส่วนร่วมของเยาวชนก่อน!";
+            }
+        }
+
+        function restartQuiz() {
+            startQuiz();
+        }
+
+        // 6. ระบบเขียนแผนการสอนอัจฉริยะ (AI Lesson Plan Generator Core API Engine)
+        async function callGeminiAPI(payload) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const delays = [1000, 2000, 4000, 8000, 16000];
+            
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                } catch (e) {
+                    // Retry silently
+                }
+                await new Promise(resolve => setTimeout(resolve, delays[i]));
+            }
+            throw new Error("ขออภัย ระบบขัดข้องเนื่องจากอัตราการติดต่อหนาแน่น กรุณารอสักครู่แล้วลองใหม่อีกครั้ง");
+        }
+
+        async function generateAIPending() {
+            const subject = document.getElementById('ai-subject').value;
+            const grade = document.getElementById('ai-grade').value;
+            const topic = document.getElementById('ai-topic').value.trim();
+            const technique = document.getElementById('ai-technique').value;
+
+            // ตรวจสอบอินพุตเบื้องต้น
+            if (!topic) {
+                showToast("⚠️ กรุณาระบุชื่อเรื่อง / หัวข้อบทเรียนก่อนรันระบบ AI");
+                return;
+            }
+
+            const placeholder = document.getElementById('ai-result-placeholder');
+            const loading = document.getElementById('ai-result-loading');
+            const content = document.getElementById('ai-result-content');
+            const toolbar = document.getElementById('ai-result-toolbar');
+            const genBtn = document.getElementById('ai-gen-btn');
+            const stepText = document.getElementById('ai-step-text');
+
+            // สลับสถานะ UI ในระหว่างรอดำเนินการ
+            placeholder.classList.add('hidden');
+            loading.classList.remove('hidden');
+            content.classList.add('hidden');
+            toolbar.classList.add('hidden');
+            genBtn.disabled = true;
+            genBtn.classList.add('opacity-50');
+
+            // ลำดับ Phase เพื่อให้นักเรียนหรือคุณครูเห็นความเคลื่อนไหวอัจฉริยะ
+            let steps = [
+                "AI กำลังศึกษาบริบททฤษฎี Active Learning...",
+                "กำลังออกแบบจุดประสงค์เชิงพฤติกรรม (K-P-A)...",
+                "กำลังกำหนดโครงสร้างภารกิจเชิงรุกสอดคล้องกับเทคนิค...",
+                "กำลังคำนวณเกณฑ์การวัดประเมินผล Rubrics ระดับสากล...",
+                "กำลังขัดเกลาบทบาทคุณครูในบทบาท Facilitator..."
+            ];
+            
+            let currentStepIdx = 0;
+            const stepInterval = setInterval(() => {
+                if (currentStepIdx < steps.length) {
+                    stepText.innerText = steps[currentStepIdx];
+                    currentStepIdx++;
+                }
+            }, 2500);
+
+            const systemPrompt = "คุณเป็นผู้เชี่ยวชาญด้านการศึกษายุคใหม่และการจัดการเรียนรู้เชิงรุก (Active Learning) ระดับมาตรฐานสากล มีหน้าที่ออกแบบแผนการจัดการเรียนรู้อัจฉริยะที่ละเอียด น่าสนใจ สนุกสนาน และทำตามได้จริง กรุณาเขียนข้อเสนอแนะโครงสร้างเป็นขั้นตอนที่สมบูรณ์แบบโดยละเอียดเป็นภาษาไทย";
+            const userQuery = `ช่วยสร้างแผนการจัดการเรียนรู้เชิงรุกสำหรับวิชา "${subject}" ระดับชั้น "${grade}" ในหัวข้อเรื่อง "${topic}" โดยใช้เทคนิคการสอนเชิงรุกแบบ "${technique}" ขอรายละเอียดหัวข้อหลักดังต่อไปนี้อย่างชัดเจน:\n1. วัตถุประสงค์เชิงพฤติกรรม (ความรู้ ทักษะ เจตคติ)\n2. อุปกรณ์/สื่อที่ต้องจัดเตรียม\n3. ขั้นตอนกิจกรรมที่ชัดเจน (ขั้นนำ, ขั้นสอนจัดกิจกรรมแบบ Active, ขั้นสรุปสะท้อนคิด AAR)\n4. แนวทางการวัดผลประเมินผลเชิงรุก\n5. บทบาทที่ครูต้องทำในฐานะ Facilitator`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const data = await callGeminiAPI(payload);
+                const textResult = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (textResult) {
+                    generatedPlanRawText = textResult; // บันทึกข้อความดิบไว้ใช้คัดลอกและดาวน์โหลด
+                    // แปลงข้อความ Markdown อย่างง่ายเพื่อแสดงผลใน HTML คอนเทนเนอร์
+                    content.innerHTML = formatMarkdownToHTML(textResult);
+                    loading.classList.add('hidden');
+                    content.classList.remove('hidden');
+                    toolbar.classList.remove('hidden');
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                loading.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+                showToast("❌ เกิดข้อผิดพลาดจากปลายทางเซิร์ฟเวอร์ AI กรุณาลองรันใหม่อีกครั้ง");
+            } finally {
+                clearInterval(stepInterval);
+                genBtn.disabled = false;
+                genBtn.classList.remove('opacity-50');
+            }
+        }
+
+        // ตัวแปลง Markdown สู่ HTML แบบสวยงาม (Regex Parser)
+        function formatMarkdownToHTML(md) {
+            let html = md;
+            
+            // ป้องกัน XSS เบื้องต้น แต่คงไว้เฉพาะโครงสร้างจัดแต่งข้อความของครู
+            html = html.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            
+            // จัดการหัวข้อย่อยและหัวข้อหลัก
+            html = html.replace(/^### (.*$)/gim, '<h4 class="text-base font-bold text-indigo-600 dark:text-indigo-400 mt-4 mb-2 font-heading">$1</h4>');
+            html = html.replace(/^## (.*$)/gim, '<h3 class="text-lg font-bold text-slate-900 dark:text-white mt-5 mb-2 font-heading border-b border-slate-200 dark:border-slate-800 pb-1">$1</h3>');
+            html = html.replace(/^# (.*$)/gim, '<h2 class="text-xl font-bold text-slate-900 dark:text-white mt-6 mb-3 font-heading">$1</h2>');
+            
+            // จัดการตัวหนา
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 dark:text-white font-bold">$1</strong>');
+            
+            // จัดการสัญลักษณ์รายการ
+            html = html.replace(/^\s*[\*\-]\s+(.*$)/gim, '<li class="ml-4 list-disc text-slate-700 dark:text-slate-300 pb-1 leading-relaxed">$1</li>');
+            html = html.replace(/^\s*(\d+)\.\s+(.*$)/gim, '<li class="ml-4 list-decimal text-slate-700 dark:text-slate-300 pb-1 leading-relaxed">$2</li>');
+            
+            // จัดการขึ้นบรรทัดใหม่
+            html = html.replace(/\n/g, '<br>');
+            
+            // ทำความสะอาดส่วนประกอบ list
+            html = html.replace(/(<li.*<\/li>)/g, '<ul class="space-y-1 py-1">$1</ul>');
+            
+            return html;
+        }
+
+        // ระบบคัดลอกปลอดภัย Safe Clipboard (ผ่าน input/textarea หลบเลี่ยง iFrame Sandbox)
+        function copyAIConsent() {
+            if (!generatedPlanRawText) return;
+            
+            const textarea = document.createElement('textarea');
+            textarea.value = generatedPlanRawText;
+            textarea.style.position = 'fixed'; // ซ่อนไว้นอกสายตา
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast("📋 คัดลอกแผนการจัดการเรียนรู้ไปยังคลิปบอร์ดแล้ว!");
+                } else {
+                    showToast("⚠️ ไม่สามารถคัดลอกได้โดยตรง กรุณาคลุมข้อความเพื่อคัดลอก");
+                }
+            } catch (err) {
+                showToast("⚠️ ระบบความปลอดภัยบราวเซอร์จำกัดการเข้าถึงคลิปบอร์ด");
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // เรียกใช้งานฟังก์ชันเริ่มต้นธีมเมื่อโหลดเสร็จ
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+        });
+    </script>
+</body>
+</html>
